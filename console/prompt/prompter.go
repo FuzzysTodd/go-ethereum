@@ -96,9 +96,9 @@ func newTerminalPrompter() *terminalPrompter {
 		// Switch back to normal mode while we're not prompting.
 		normalMode.ApplyMode()
 	}
-	p.SetCtrlCAborts(true)
-	p.SetTabCompletionStyle(liner.TabPrints)
-	p.SetMultiLineMode(true)
+	p.State.SetCtrlCAborts(true)
+	p.State.SetTabCompletionStyle(liner.TabPrints)
+	p.State.SetMultiLineMode(true)
 	return p
 }
 
@@ -142,7 +142,7 @@ func (p *terminalPrompter) PromptPassword(prompt string) (passwd string, err err
 // PromptConfirm displays the given prompt to the user and requests a boolean
 // choice to be made, returning that choice.
 func (p *terminalPrompter) PromptConfirm(prompt string) (bool, error) {
-	input, err := p.Prompt(prompt + " [y/n] ")
+	input, err := p.State.Prompt(prompt + " [y/n] ")
 	if len(input) > 0 && strings.ToUpper(input[:1]) == "Y" {
 		return true, nil
 	}
